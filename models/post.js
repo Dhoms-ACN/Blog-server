@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const beautifyUnique = require('mongoose-beautiful-unique-validation');
+const uniqueValidator = require('mongoose-unique-validator')
 
 const postSchema = new mongoose.Schema({
     title: {
@@ -39,7 +39,7 @@ postSchema.pre('findOneAndUpdate', function(next) {
     next()
 })
 
-postSchema.plugin(beautifyUnique)
+postSchema.plugin(uniqueValidator)
 
 const Post = mongoose.model('Post', postSchema)
 

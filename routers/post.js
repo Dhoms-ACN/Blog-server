@@ -1,7 +1,7 @@
 const express = require('express')
 const Post = require('../models/post')
+const auth = require('../middleware/auth')
 const postRouter = new express.Router()
-
 
 
 postRouter.get('/' , async (req, res) => {
@@ -13,7 +13,7 @@ postRouter.get('/' , async (req, res) => {
     }
 })
 
-postRouter.post('/create', async (req, res) => {
+postRouter.post('/create', auth, async (req, res) => {
     try{
         const post = await new Post(req.body).save()
         res.send(post)
@@ -22,7 +22,7 @@ postRouter.post('/create', async (req, res) => {
     }
 })
 
-postRouter.get('/edit/:slug', async (req, res) => {
+postRouter.get('/edit/:slug', auth, async (req, res) => {
     try {
         const post = await Post.find({slug: req.params.slug})
         if(post.length === 0) {
@@ -34,7 +34,7 @@ postRouter.get('/edit/:slug', async (req, res) => {
     }
 })
 
-postRouter.put('/edit/:slug', async (req, res) => {
+postRouter.put('/edit/:slug', auth, async (req, res) => {
       try {
         const query = {slug: req.params.slug}
         const post = await Post.findOneAndUpdate(query, {...req.body }, {returnDocument: 'after'})
@@ -44,7 +44,7 @@ postRouter.put('/edit/:slug', async (req, res) => {
     }
 })
 
-postRouter.delete('/:id', async (req, res) => {
+postRouter.delete('/:id',  auth, async (req, res) => {
     await Post.deleteOne({ _id: req.params.id})
     res.status(204).send()
 })
