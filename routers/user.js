@@ -13,6 +13,10 @@ userRouter.post('/sign-in', async (req, res) => {
     
 })
 
+userRouter.post('/login', async (req, res) => {
+    //add login if done with json web token
+})
+
 
 
 module.exports = userRouter
