@@ -1,10 +1,18 @@
 const express = require('express')
-const user = require('../models/user')
+const User = require('../models/user')
 const userRouter = new express.Router()
 
 
-userRouter.post('/users', (req, res) => {
-    res.send('testing users create')
+userRouter.post('/sign-in', async (req, res) => {
+    try{
+        const user = await new User(req.body).save()
+        res.json(user)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+    
 })
+
+
 
 module.exports = userRouter
