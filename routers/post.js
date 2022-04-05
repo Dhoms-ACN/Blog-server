@@ -4,7 +4,7 @@ const auth = require('../middleware/auth')
 const postRouter = new express.Router()
 
 
-postRouter.get('/' , async (req, res) => {
+postRouter.get('/', async (req, res) => {
     try {
         const posts = await Post.find({})
         res.send(posts)
